@@ -17,7 +17,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book addBook(Book book) {
         book.setBookId(String.valueOf(c++));
-        //bookList.add(book);
         bookMap.put(book.getBookId(), book);
         return book;
     }
@@ -25,37 +24,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(String bookId) {
         bookMap.remove(bookId);
-//        int index = -1;
-//        System.out.println("Going here");
-//        for(int i = 0; i< bookList.size(); i++){
-//            if(bookList.get(i).getBookId().equals(bookId)){
-//                index = i;
-//                //System.out.println("Book found");
-//                break;
-//            }
-//        }
-//        if(index>-1){
-//            bookList.remove(index);
-//        }
     }
 
     @Override
     public Book updateBook(String bookId, Book book) {
-//        int index = -1;
-//        for(int i = 0; i< bookList.size(); i++){
-//            if(bookList.get(i).getBookId().equals(bookId)){
-//                index = i;
-//                break;
-//            }
-//        }
-//        if(index>-1){
-//            String bookId1 = bookList.get(index).getBookId();
-//            book.setBookId(bookId1);
-//            bookList.set(index, book);
-//            return book;
-//        }
         bookMap.computeIfPresent(bookId, (k, v) -> book);
-//      bookMap.put(bookId, book);
         return null;
     }
 
@@ -66,16 +39,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBook(String bookId) {
-//        int index = -1;
-//        for(int i = 0; i< bookList.size(); i++){
-//            if(bookList.get(i).getBookId().equals(bookId)){
-//                index = i;
-//                break;
-//            }
-//        }
-//        if(index>-1){
-//            return bookList.get(index);
-//        }
         return bookMap.getOrDefault(bookId, null);
     }
 
@@ -86,31 +49,5 @@ public class BookServiceImpl implements BookService {
         bookMap.computeIfPresent(bookId, (k, v) -> {v.getReviews().add(review); return v;});
         double sum = bookMap.get(bookId).getReviews().stream().mapToDouble(x -> x.getRating()).sum();
         bookMap.get(bookId).setRating(sum/bookMap.get(bookId).getReviews().size());
-//        int index = -1;
-//        for(int i = 0; i< bookList.size(); i++){
-//            if(bookList.get(i).getBookId().equals(bookId)){
-//                index = i;
-//                break;
-//            }
-//        }
-//        if(index>-1){
-//            List<Review> r = bookList.get(index).getReviews();
-//            if(r!=null) {
-//                r.add(review);
-//            }
-//            else{
-//                r = new java.util.ArrayList<>();
-//                r.add(review);
-//            }
-//            bookList.get(index).setReviews(r);
-
-            //double sum = r.stream().map(x -> x.getRating()).reduce(0.0, (a,b) -> a + b);
-
-//            double sum = 0.0;
-//            for(int i = 0; i< r.size(); i++){
-//                sum += r.get(i).getRating();
-//            }
-//            bookList.get(index).setRating(sum/r.size());
-//        }
     }
 }
