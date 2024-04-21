@@ -6,13 +6,12 @@ import com.JBDL.RestDemoLibrary.service.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class BookServiceImpl implements BookService {
     int c = 1, r=1;
-    List<Book> bookList = new java.util.ArrayList<>();
+    //List<Book> bookList = new java.util.ArrayList<>();
     Map<String, Book> bookMap= new HashMap<>();
     @Override
     public Book addBook(Book book) {
@@ -28,8 +27,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book updateBook(String bookId, Book book) {
-        bookMap.computeIfPresent(bookId, (k, v) -> book);
-        return null;
+        bookMap.computeIfPresent(bookId, (k, v) -> {v.setBookId(bookId); return v;});
+        return book;
     }
 
     @Override
@@ -47,7 +46,7 @@ public class BookServiceImpl implements BookService {
         review.setReviewId(String.valueOf(r++));
         review.setBookId(bookId);
         bookMap.computeIfPresent(bookId, (k, v) -> {v.getReviews().add(review); return v;});
-        double sum = bookMap.get(bookId).getReviews().stream().mapToDouble(x -> x.getRating()).sum();
+        double sum = bookMap.get(bookId).getReviews().stream().mapToDouble(Review::getRating).sum();
         bookMap.get(bookId).setRating(sum/bookMap.get(bookId).getReviews().size());
     }
 }
