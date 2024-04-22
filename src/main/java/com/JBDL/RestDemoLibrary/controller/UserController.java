@@ -19,6 +19,7 @@ public class UserController {
     BookService bookService;
     @Autowired
     UserService userService;
+
     @PostMapping("/user")
     public ResponseEntity<User> addUser(@RequestBody User user){
         return new ResponseEntity<>(userService.addUser(user), HttpStatus.CREATED);

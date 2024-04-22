@@ -3,13 +3,17 @@ package com.JBDL.RestDemoLibrary.service.impl;
 import com.JBDL.RestDemoLibrary.domain.Book;
 import com.JBDL.RestDemoLibrary.domain.Review;
 import com.JBDL.RestDemoLibrary.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class BookServiceImpl implements BookService {
+    @Autowired
+    private Connection connection;
     int c = 1, r=1;
     //List<Book> bookList = new java.util.ArrayList<>();
     Map<String, Book> bookMap= new HashMap<>();
