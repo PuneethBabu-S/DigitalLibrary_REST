@@ -2,6 +2,7 @@ package com.JBDL.RestDemoLibrary.controller;
 
 import com.JBDL.RestDemoLibrary.domain.Book;
 import com.JBDL.RestDemoLibrary.service.BookService;
+import com.JBDL.RestDemoLibrary.service.resource.BookRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,18 +15,18 @@ public class AdminController {
     BookService bookService;
 
     @PostMapping("admin/book")
-    public ResponseEntity<Book> addBook(@RequestBody @Valid Book book) {
-        return new ResponseEntity<>(bookService.addBook(book), HttpStatus.CREATED);
+    public ResponseEntity<Book> addBook(@RequestBody @Valid BookRequest bookRequest) {
+        return new ResponseEntity<>(bookService.addBook(bookRequest.getBook()), HttpStatus.CREATED);
     }
 
     @DeleteMapping("admin/book")
-    public ResponseEntity deleteBook(@RequestParam("bookId") String bookId) {
+    public ResponseEntity deleteBook(@RequestParam("bookId") Integer bookId) {
         bookService.deleteBook(bookId);
         return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("admin/book")
-    public ResponseEntity<Book> updateBook(@RequestParam("bookId") String bookId, @RequestBody @Valid Book book) {
-        return new ResponseEntity<>(bookService.updateBook(bookId, book), HttpStatus.OK);
+    public ResponseEntity<Book> updateBook(@RequestParam("bookId") Integer bookId, @RequestBody @Valid BookRequest bookRequest) {
+        return new ResponseEntity<>(bookService.updateBook(bookId, bookRequest.getBook()), HttpStatus.OK);
     }
 }
