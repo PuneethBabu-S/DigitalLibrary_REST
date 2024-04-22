@@ -1,16 +1,19 @@
 package com.JBDL.RestDemoLibrary.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "users")
+@Entity
+@Builder
 public class User {
-    private String UserId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer UserId;
     private String username;
     private String password;
     private String role;

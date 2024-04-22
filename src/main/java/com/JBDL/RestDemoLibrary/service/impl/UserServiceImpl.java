@@ -1,43 +1,46 @@
 package com.JBDL.RestDemoLibrary.service.impl;
 
 import com.JBDL.RestDemoLibrary.domain.User;
+import com.JBDL.RestDemoLibrary.repository.UserRepository;
 import com.JBDL.RestDemoLibrary.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-    Map<String, User> users = new HashMap<>();
-    int uid = 1;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public User addUser(User user) {
-        user.setUserId(String.valueOf(uid++));
-        users.put(user.getUserId(), user);
+        userRepository.save(user);
         return user;
     }
 
     @Override
-    public User updateUser(String userId, User user) {
-        users.computeIfPresent(userId, (k, v) -> {v.setUserId(userId); return v;});
+    public User updateUser(Integer userId, User user) {
+        Optional<User> originalUser = userRepository.findById(userId);
+        if (originalUser.isPresent()) {
+            userRepository.save(user);
+        }
         return user;
     }
 
     @Override
-    public User getUser(String userId) {
-        return users.getOrDefault(userId, null);
+    public User getUser(Integer userId) {
+        return userRepository.findById(userId).orElse(null);
     }
 
     @Override
-    public void deleteUser(String userId) {
-        users.remove(userId);
+    public void deleteUser(Integer userId) {
+        userRepository.deleteById(userId);
     }
 
     @Override
-    public Map<String, User> getAllUsers() {
-        return users;
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

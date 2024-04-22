@@ -2,12 +2,12 @@ package com.JBDL.RestDemoLibrary.service;
 
 import com.JBDL.RestDemoLibrary.domain.User;
 
-import java.util.Map;
+import java.util.List;
 
 public interface UserService {
     public User addUser(User user);
-    public User updateUser(String userId, User user);
-    public User getUser(String userId);
-    public void deleteUser(String userId);
-    public Map<String, User> getAllUsers();
+    public User updateUser(Integer userId, User user);
+    public User getUser(Integer userId);
+    public void deleteUser(Integer userId);
+    public List<User> getAllUsers();
 }

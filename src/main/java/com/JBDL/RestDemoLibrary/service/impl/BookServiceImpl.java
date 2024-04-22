@@ -13,9 +13,6 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
     @Autowired
     BookRepository bookRepository;
-    int c = 1, r=1;
-    //List<Book> bookList = new java.util.ArrayList<>();
-    //Map<String, Book> bookMap= new HashMap<>();
     @Override
     public Book addBook(Book book) {
         bookRepository.save(book);

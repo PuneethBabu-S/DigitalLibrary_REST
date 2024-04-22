@@ -2,6 +2,7 @@ package com.JBDL.RestDemoLibrary.service.resource;
 
 import com.JBDL.RestDemoLibrary.domain.Book;
 import com.JBDL.RestDemoLibrary.domain.Genre;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,8 @@ public class BookRequest {
     private Genre genre;
     @Min(value = 0, message = "Cost cannot be negative")
     private double cost;
-    @Min(value=1900, message = "Year should be greater than 1900")
+    @Min(value = 1900, message = "Year should be greater than 1900")
+    @Max(value = 2024, message = "Year should be less than current year")
     private Integer year;
 
     public Book getBook() {

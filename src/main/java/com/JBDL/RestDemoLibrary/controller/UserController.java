@@ -4,13 +4,14 @@ import com.JBDL.RestDemoLibrary.domain.Book;
 import com.JBDL.RestDemoLibrary.domain.User;
 import com.JBDL.RestDemoLibrary.service.BookService;
 import com.JBDL.RestDemoLibrary.service.UserService;
+import com.JBDL.RestDemoLibrary.service.resource.UserRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class UserController {
@@ -21,27 +22,27 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/user")
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        return new ResponseEntity<>(userService.addUser(user), HttpStatus.CREATED);
+    public ResponseEntity<User> addUser(@RequestBody @Valid UserRequest user){
+        return new ResponseEntity<>(userService.addUser(user.getUser()), HttpStatus.CREATED);
     }
 
     @PutMapping("/user/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable("userId") String userId,@RequestBody User user){
-        return new ResponseEntity<>(userService.updateUser(userId, user), HttpStatus.OK);
+    public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId,@RequestBody @Valid UserRequest user){
+        return new ResponseEntity<>(userService.updateUser(userId, user.getUser()), HttpStatus.OK);
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable("userId") String userId){
+    public ResponseEntity<User> getUser(@PathVariable("userId") Integer userId){
         return new ResponseEntity<>(userService.getUser(userId),HttpStatus.OK);
     }
 
     @GetMapping("/users")
-    public ResponseEntity<Map<String,User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
 
     @DeleteMapping("/user/{userId}")
-    public ResponseEntity deleteUser(@PathVariable("userId") String userId){
+    public ResponseEntity deleteUser(@PathVariable("userId") Integer userId){
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
