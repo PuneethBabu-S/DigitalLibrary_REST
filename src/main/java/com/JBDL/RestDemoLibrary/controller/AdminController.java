@@ -26,7 +26,10 @@ public class AdminController {
     }
 
     @PutMapping("admin/book")
-    public ResponseEntity<Book> updateBook(@RequestParam("bookId") Integer bookId, @RequestBody @Valid BookRequest bookRequest) {
-        return new ResponseEntity<>(bookService.updateBook(bookId, bookRequest.getBook()), HttpStatus.OK);
+    public ResponseEntity updateBook(@RequestParam("bookId") Integer bookId, @RequestBody @Valid BookRequest bookRequest) {
+        //Book res = null;
+        //res = bookService.updateBook(bookId, bookRequest.getBook());
+        //Boolean present = bookService.updateBook(bookId, bookRequest.getBook());
+        return new ResponseEntity<>( bookService.updateBook(bookId, bookRequest.getBook()) ? HttpStatus.CREATED : HttpStatus.NO_CONTENT);
     }
 }

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.convert.ValueConverter;
 
 @Getter
 @Setter
@@ -19,6 +20,7 @@ public class BookRequest {
     private String title;
     @NotBlank(message = "Author cannot be blank")
     private String author;
+    @ValueConverter
     private Genre genre;
     @Min(value = 0, message = "Cost cannot be negative")
     private double cost;
@@ -27,6 +29,8 @@ public class BookRequest {
     private Integer year;
 
     public Book getBook() {
-        return Book.builder().title(title).author(author).genre(genre).cost(cost).year(year).rating(0.0).build();
+        return Book.builder().title(this.title).author(this.author).
+                genre(this.genre).cost(this.cost).year(this.year).
+                rating(0.0).build();
     }
 }

@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @PutMapping("/user/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId,@RequestBody @Valid UserRequest user){
-        return new ResponseEntity<>(userService.updateUser(userId, user.getUser()), HttpStatus.OK);
+    public ResponseEntity updateUser(@PathVariable("userId") Integer userId,@RequestBody @Valid UserRequest user){
+        return new ResponseEntity<>(userService.updateUser(userId, user.getUser()) ? HttpStatus.OK : HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/user/{userId}")

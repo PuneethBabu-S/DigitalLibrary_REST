@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class  UserRequest {
     @NotBlank(message = "Username cannot be blank")
     private String username;
     @NotBlank(message = "Password cannot be blank")
@@ -26,7 +26,7 @@ public class UserRequest {
 
     public User getUser() {
         return User.builder().username(this.username).password(this.password)
-                .role((this.role.equals("") ? "user" : this.role)).email(this.email).phoneNumber(this.phoneNumber)
+                .role((this.role.isBlank() ? "user" : this.role)).email(this.email).phoneNumber(this.phoneNumber)
                 .build();
     }
 }

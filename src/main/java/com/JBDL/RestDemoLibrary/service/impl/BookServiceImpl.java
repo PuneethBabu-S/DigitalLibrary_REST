@@ -1,7 +1,9 @@
 package com.JBDL.RestDemoLibrary.service.impl;
 
 import com.JBDL.RestDemoLibrary.domain.Book;
+import com.JBDL.RestDemoLibrary.domain.Review;
 import com.JBDL.RestDemoLibrary.repository.BookRepository;
+import com.JBDL.RestDemoLibrary.repository.ReviewRepository;
 import com.JBDL.RestDemoLibrary.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
     @Autowired
     BookRepository bookRepository;
+    @Autowired
+    ReviewRepository reviewRepository;
+
     @Override
     public Book addBook(Book book) {
         bookRepository.save(book);
@@ -25,13 +30,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book updateBook(Integer bookId, Book book) {
+    public Boolean updateBook(Integer bookId, Book book) {
         Optional<Book> originalBook = bookRepository.findById(bookId);
         if (originalBook.isPresent()) {
             book.setBookId(bookId);
             bookRepository.save(book);
         }
-        return book;
+        return originalBook.isPresent();
     }
 
     @Override
@@ -45,11 +50,14 @@ public class BookServiceImpl implements BookService {
     }
 
 //    @Override
-//    public void addReview(String bookId, Review review) {
-//        review.setReviewId(String.valueOf(r++));
-//        review.setBookId(bookId);
-//        bookMap.computeIfPresent(bookId, (k, v) -> {v.getReviews().add(review); return v;});
-//        double sum = bookMap.get(bookId).getReviews().stream().mapToDouble(Review::getRating).sum();
-//        bookMap.get(bookId).setRating(sum/bookMap.get(bookId).getReviews().size());
+//    public Review addReview(Review review) {
+//        reviewRepository.save(review);
+//        return review;
+////        Integer bookId = review.getBookId();
+////        review.setReviewId(String.valueOf(r++));
+////        review.setBookId(bookId);
+////        bookMap.computeIfPresent(bookId, (k, v) -> {v.getReviews().add(review); return v;});
+////        double sum = bookMap.get(bookId).getReviews().stream().mapToDouble(Review::getRating).sum();
+////        bookMap.get(bookId).setRating(sum/bookMap.get(bookId).getReviews().size());
 //    }
 }

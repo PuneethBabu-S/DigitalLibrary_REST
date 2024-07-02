@@ -21,12 +21,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Integer userId, User user) {
+    public Boolean updateUser(Integer userId, User user) {
         Optional<User> originalUser = userRepository.findById(userId);
         if (originalUser.isPresent()) {
             userRepository.save(user);
         }
-        return user;
+        return originalUser.isPresent();
     }
 
     @Override

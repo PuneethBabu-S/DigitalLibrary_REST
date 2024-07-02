@@ -1,20 +1,26 @@
 package com.JBDL.RestDemoLibrary.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@Table(name = "reviews")
+@Entity
 public class Review {
-    private String ReviewId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer reviewId;
     private double rating;
-    private String description;
-    private String bookId;
-
-    private String reviewer;
+    private String comment;
+    @ManyToOne
+    @JoinColumn(name = "book_bookId")
+    @JsonIgnoreProperties("reviews")
+    private Book book;
+    //private String reviewer;
 
 }
